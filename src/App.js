@@ -8,6 +8,13 @@ const GlobalStyle = createGlobalStyle`
     margin: 0;
   }
 `;
+// mixin: 재활용하기 위해 만든 CSS 덩어리
+const SampleMixin = css`
+  box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11), 0 1px, 3px rgba(0, 0, 0, 0.08);
+  background-color: white;
+  border-radius: 10px;
+  padding: 20px;
+`;
 
 const Container = styled.div`
   height: 100vh;
@@ -15,43 +22,14 @@ const Container = styled.div`
   background-color: #ff7979;
 `;
 
-// keyframes 사용
-const rotation = keyframes`
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-`;
-
-const Button = styled.button`
-  border-radius: 50px;
-  padding: 5px;
-  min-width: 120px;
-  color: white;
-  font-weight: 600;
-  appearance: none;
-  cursor: pointer;
-  &:active,
-  &:focus {
-    outline: none;
-  }
-  /* styled-components는 props를 사용할 수 있다. */
-  background-color: ${props => (props.danger ? "#c0392b" : "#2ecc71")};
-  ${props => {
-    if (props.danger) {
-      // animation 사용. return 할 때 css를 이용한다.
-      return css`
-        animation: ${rotation} ${props.rotationTime}s linear infinite;
-      `;
-    }
-  }}
-`;
-
-// Button 컴포넌트의 스타일링을 적용한 a 태그
-const Anchor = styled(Button)`
-  text-decoration: none;
+// attribute 추가하기
+const Input = styled.input.attrs({
+  required: true
+})`
+  border-radius: 10px;
+  border: none;
+  /* mixin 적용 */
+  ${SampleMixin}
 `;
 
 const App = () => {
@@ -60,13 +38,7 @@ const App = () => {
       {/* 전역 스타일링 컴포넌트 추가 */}
       <GlobalStyle />
       <Container>
-        <Button danger={false}>Hello</Button>
-        <Button danger={true} rotationTime={4}>
-          Hello
-        </Button>
-        <Anchor as="a" href="https://www.google.com">
-          Go To Google
-        </Anchor>
+        <Input placeholder="hello" />
       </Container>
     </>
   );
