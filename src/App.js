@@ -1,5 +1,13 @@
 import React from "react";
-import styled from "styled-components";
+import styled, { createGlobalStyle } from "styled-components";
+
+// 전역 스타일링. createGlobalStyle을 import한 후 컴포넌트 생성
+const GlobalStyle = createGlobalStyle`
+  body {
+    padding: 0;
+    margin: 0;
+  }
+`;
 
 const Container = styled.div`
   height: 100vh;
@@ -25,12 +33,24 @@ const Button = styled.button`
   background-color: ${props => (props.danger ? "#c0392b" : "#2ecc71")};
 `;
 
+// Button 컴포넌트의 스타일링을 적용한 a 태그
+const Anchor = styled(Button)`
+  text-decoration: none;
+`;
+
 const App = () => {
   return (
-    <Container>
-      <Button danger={false}>Hello</Button>
-      <Button danger={true}>Hello</Button>
-    </Container>
+    <>
+      {/* 전역 스타일링 컴포넌트 추가 */}
+      <GlobalStyle />
+      <Container>
+        <Button danger={false}>Hello</Button>
+        <Button danger={true}>Hello</Button>
+        <Anchor as="a" href="https://www.google.com">
+          Go To Google
+        </Anchor>
+      </Container>
+    </>
   );
 };
 

@@ -8,3 +8,6 @@
 $ yarn add styled-components
 ```
 
+## Global Style
+
+전역 스타일링
