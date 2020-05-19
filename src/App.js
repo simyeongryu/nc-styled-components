@@ -1,5 +1,6 @@
 import React from "react";
-import styled, { createGlobalStyle, keyframes, css } from "styled-components";
+import styled, { createGlobalStyle, ThemeProvider } from "styled-components";
+import theme from "./theme";
 
 // 전역 스타일링. createGlobalStyle을 import한 후 컴포넌트 생성
 const GlobalStyle = createGlobalStyle`
@@ -8,13 +9,6 @@ const GlobalStyle = createGlobalStyle`
     margin: 0;
   }
 `;
-// mixin: 재활용하기 위해 만든 CSS 덩어리
-const SampleMixin = css`
-  box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11), 0 1px, 3px rgba(0, 0, 0, 0.08);
-  background-color: white;
-  border-radius: 10px;
-  padding: 20px;
-`;
 
 const Container = styled.div`
   height: 100vh;
@@ -22,24 +16,30 @@ const Container = styled.div`
   background-color: #ff7979;
 `;
 
-// attribute 추가하기
-const Input = styled.input.attrs({
-  required: true
-})`
-  border-radius: 10px;
-  border: none;
-  /* mixin 적용 */
-  ${SampleMixin}
+const Card = styled.div`
+  background-color: red;
 `;
+
+const Button = styled.button`
+  border-radius: 30px;
+  padding: 25px 15px;
+  background-color: ${props => props.theme.mainColor};
+`;
+
+const Form = () => (
+  <Card>
+    <Button>Hello</Button>
+  </Card>
+);
 
 const App = () => {
   return (
     <>
-      {/* 전역 스타일링 컴포넌트 추가 */}
-      <GlobalStyle />
-      <Container>
-        <Input placeholder="hello" />
-      </Container>
+      <ThemeProvider theme={theme}>
+        <Container>
+          <Form />
+        </Container>
+      </ThemeProvider>
     </>
   );
 };
