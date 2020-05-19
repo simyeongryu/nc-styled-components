@@ -203,3 +203,17 @@ export default App;
 ```
 
 ## Nesting
+
+Container 내 Card에 접근하고 싶다면 아래와 같이 작성
+
+```js
+const Container = styled.div`
+  height: 100vh;
+  width: 100%;
+  background-color: #ff7979;
+  /* nesting */
+  ${Card}:last-child {
+    background-color: blue;
+  }
+`;
+```
