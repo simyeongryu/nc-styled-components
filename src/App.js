@@ -1,5 +1,5 @@
 import React from "react";
-import styled, { createGlobalStyle } from "styled-components";
+import styled, { createGlobalStyle, keyframes, css } from "styled-components";
 
 // 전역 스타일링. createGlobalStyle을 import한 후 컴포넌트 생성
 const GlobalStyle = createGlobalStyle`
@@ -15,6 +15,16 @@ const Container = styled.div`
   background-color: #ff7979;
 `;
 
+// keyframes 사용
+const rotation = keyframes`
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+`;
+
 const Button = styled.button`
   border-radius: 50px;
   padding: 5px;
@@ -27,10 +37,16 @@ const Button = styled.button`
   &:focus {
     outline: none;
   }
-  /* styled-components는 컴포넌트이기 때문에 
-   * props를 사용할 수 있다.
-  **/
+  /* styled-components는 props를 사용할 수 있다. */
   background-color: ${props => (props.danger ? "#c0392b" : "#2ecc71")};
+  ${props => {
+    if (props.danger) {
+      // animation 사용. return 할 때 css를 이용한다.
+      return css`
+        animation: ${rotation} ${props.rotationTime}s linear infinite;
+      `;
+    }
+  }}
 `;
 
 // Button 컴포넌트의 스타일링을 적용한 a 태그
@@ -45,7 +61,9 @@ const App = () => {
       <GlobalStyle />
       <Container>
         <Button danger={false}>Hello</Button>
-        <Button danger={true}>Hello</Button>
+        <Button danger={true} rotationTime={4}>
+          Hello
+        </Button>
         <Anchor as="a" href="https://www.google.com">
           Go To Google
         </Anchor>
